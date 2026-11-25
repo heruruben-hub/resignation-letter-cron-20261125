@@ -21,6 +21,12 @@ function main() {
   if (ENTRY.length > 140) {
     throw new Error(`Entry is ${ENTRY.length} characters, over the 140 limit`);
   }
+  if (ENTRY.trim().length === 0 || ENTRY !== ENTRY.trim()) {
+    throw new Error("Entry must be one non-blank line with no surrounding space");
+  }
+  if (ENTRY.includes("\n")) {
+    throw new Error("Entry must be a single line");
+  }
   mkdirSync(dirname(OUTPUT_PATH), { recursive: true });
   writeFileSync(OUTPUT_PATH, ENTRY + "\n", "utf8");
   console.log(`Wrote ${ENTRY.length} characters to ${OUTPUT_PATH}`);
